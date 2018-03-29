@@ -1,0 +1,5 @@
+[Twitch]
+client_id = abcdefid 
+
+[DB]
+name = VODs.db
