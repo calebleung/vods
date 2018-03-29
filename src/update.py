@@ -79,5 +79,7 @@ def main():
         offset += len(allVODData['videos'])
         allVODData = json.loads(requests.get(vodJSONURL + '&offset={}'.format(offset), headers=headers).text)
 
+    conn.close()
+
 if __name__ == '__main__':
     main()

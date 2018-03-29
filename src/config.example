@@ -1,4 +1,5 @@
 [Twitch]
+channel_id = 1234
 client_id = abcdefid 
 
 [DB]
