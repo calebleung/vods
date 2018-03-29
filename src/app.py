@@ -32,7 +32,7 @@ class Search(Resource):
             games = c.fetchall()
 
             for game in games:
-                for row in c.execute('SELECT vod_id, start_at FROM played WHERE game_id=:gameID', {'gameID': game[0]}):
+                for row in c.execute('SELECT played.vod_id, played.start_at, vods.title, vods.animated_preview_url FROM played INNER JOIN vods ON vods.vod_id = played.vod_id WHERE game_id=:gameID', {'gameID': game[0]}):
                     vods.append(row)
         return {'games': games, 'vods': vods}
 
