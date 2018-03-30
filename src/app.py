@@ -1,12 +1,14 @@
 # SELECT * FROM vods INNER JOIN played ON played.vod_id = vods.vod_id INNER JOIN games ON played.game_id = games.rowid WHERE games.name='Board Games' ORDER BY vods.created_at DESC
 
-from flask import Flask, request
+from flask import Flask, request, render_template
 from flask_restful import Resource, Api
 
 import configparser
 import sqlite3
 
-app = Flask(__name__)
+app = Flask(__name__,
+        static_folder = "./dist/static",
+        template_folder = "./dist")
 api = Api(app)
 
 config = configparser.ConfigParser()
@@ -38,6 +40,10 @@ class Search(Resource):
 
 api.add_resource(GamesList, '/games')
 api.add_resource(Search, '/search/<string:searchString>')
+
+@app.route('/')
+def index():
+    return render_template("index.html")
 
 if __name__ == '__main__':
     app.run(debug=True)

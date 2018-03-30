@@ -1,7 +1,5 @@
 bin/
 include/
 lib/
-src/config
-src/paVODs.db
 pip-selfcheck.json
 .Python

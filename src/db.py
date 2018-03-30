@@ -8,6 +8,8 @@ def main():
     conn = sqlite3.connect(config['DB']['name'])
     c = conn.cursor()
 
+    c.execute('''CREATE TABLE sys
+             (total_vods text, newest_created_at text)''')
     c.execute('''CREATE TABLE games
              (name text)''')
     c.execute('''CREATE TABLE vods
