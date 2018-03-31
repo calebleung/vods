@@ -7,8 +7,8 @@ import configparser
 import sqlite3
 
 app = Flask(__name__,
-        static_folder = "./dist/static",
-        template_folder = "./dist")
+        static_folder = "./www/static",
+        template_folder = "./www")
 api = Api(app)
 
 config = configparser.ConfigParser()
@@ -19,7 +19,7 @@ class GamesList(Resource):
         games = []
         with sqlite3.connect(config['DB']['name']) as conn:
             c = conn.cursor()
-            for row in c.execute('SELECT name FROM games ORDER BY name COLLATE NOCASE ASC'):
+            for row in c.execute('SELECT name FROM games WHERE redirect IS NULL ORDER BY name COLLATE NOCASE ASC'):
                 games.append(row[0])
         return {'games': games}
 
@@ -41,8 +41,9 @@ class Search(Resource):
 api.add_resource(GamesList, '/games')
 api.add_resource(Search, '/search/<string:searchString>')
 
-@app.route('/')
-def index():
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
     return render_template("index.html")
 
 if __name__ == '__main__':

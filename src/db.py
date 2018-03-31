@@ -11,11 +11,11 @@ def main():
     c.execute('''CREATE TABLE sys
              (total_vods text, newest_created_at text)''')
     c.execute('''CREATE TABLE games
-             (name text)''')
+             (name text, redirect int)''')
     c.execute('''CREATE TABLE vods
              (vod_id text, title text, desc text, created_at text, animated_preview_url text)''')
     c.execute('''CREATE TABLE played
-             (vod_id text, start_at text, game_id text)''')
+             (vod_id text, start_at text, game_id text, modified int)''')
 
     conn.commit()
     conn.close()

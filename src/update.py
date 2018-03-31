@@ -15,13 +15,15 @@ conn = sqlite3.connect(config['DB']['name'])
 c = conn.cursor()
 
 def getGame(game):
-    c.execute('SELECT rowid FROM games WHERE name=?', game)
+    c.execute('SELECT rowid, redirect FROM games WHERE name=?', game)
     rowid = c.fetchone()
 
     if rowid is None:
         c.execute('INSERT INTO games VALUES (?)', game)
         conn.commit()
         return c.lastrowid
+    elif redirect is not None:
+        return rowid[1]
     return rowid[0]
 
 def insertVOD(data):
