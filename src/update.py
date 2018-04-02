@@ -19,10 +19,10 @@ def getGame(game):
     rowid = c.fetchone()
 
     if rowid is None:
-        c.execute('INSERT INTO games VALUES (?)', game)
+        c.execute('INSERT INTO games VALUES (?,NULL)', game)
         conn.commit()
         return c.lastrowid
-    elif redirect is not None:
+    elif rowid[1] is not None:
         return rowid[1]
     return rowid[0]
 
@@ -41,19 +41,39 @@ def insertPlayed(data):
     rowid = c.fetchone()[0]
 
     if rowid == 0:
-        c.execute('INSERT INTO played VALUES (?,?,?)', data)
+        c.execute('INSERT INTO played VALUES (?,?,?,NULL)', data)
         conn.commit()
     else:
         print('{} @ {} was found in the db.'.format(data[0], data[1]))
 
+def getNumVODsInDB():
+    c.execute('SELECT total_vods FROM sys')
+    return c.fetchone()[0]
+
+def updateVODsJSON(vodsInDB, totalVODs):
+    data = (totalVODs + vodsInDB, vodsInDB,)
+    c.execute('UPDATE sys SET total_vods = ? where total_vods = ?', data)
+    conn.commit()
+
+def getVODsJSON(limit, offset):
+    return json.loads(requests.get('https://api.twitch.tv/kraken/channels/{}/videos?api_version=5&broadcast_type=archive&limit={}&offset={}'.format(config['Twitch']['channel_id'], limit, offset), headers=headers).text)
+
 def main():
     offset = 0
     totalVODs = 0
-    vodJSONURL = 'https://api.twitch.tv/kraken/channels/{}/videos?api_version=5&broadcast_type=archive&limit=100'.format(config['Twitch']['channel_id'])
-    allVODData = json.loads(requests.get(vodJSONURL, headers=headers).text)
+    jsonLimit = 100
+    allVODData = getVODsJSON(jsonLimit, offset)
+    vodsInDB = getNumVODsInDB()
 
-    totalVODs = allVODData['_total']
+    totalVODs = allVODData['_total'] - vodsInDB
     videos = allVODData['videos']
+
+    if totalVODs < 100:
+        if totalVODs == 0:
+            print('No new VODs to add.')
+            return
+        allVODData = getVODsJSON(totalVODs, offset)
+        videos = allVODData['videos']
 
     while offset < totalVODs:
         print('{}/{}'.format(offset, totalVODs))
@@ -79,7 +99,9 @@ def main():
                     #print('Game: {} After: {}s {}'.format(marker['label'], marker['time'], vodID))
 
         offset += len(allVODData['videos'])
-        allVODData = json.loads(requests.get(vodJSONURL + '&offset={}'.format(offset), headers=headers).text)
+        allVODData = getVODsJSON(jsonLimit, offset)
+
+    updateVODsJSON(vodsInDB, totalVODs)
 
     conn.close()
 

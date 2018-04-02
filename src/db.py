@@ -9,13 +9,14 @@ def main():
     c = conn.cursor()
 
     c.execute('''CREATE TABLE sys
-             (total_vods text, newest_created_at text)''')
+             (total_vods int default 0, newest_created_at text)''')
     c.execute('''CREATE TABLE games
              (name text, redirect int)''')
     c.execute('''CREATE TABLE vods
              (vod_id text, title text, desc text, created_at text, animated_preview_url text)''')
     c.execute('''CREATE TABLE played
              (vod_id text, start_at text, game_id text, modified int)''')
+    c.execute('INSERT INTO sys DEFAULT VALUES')
 
     conn.commit()
     conn.close()
