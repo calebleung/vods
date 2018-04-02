@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>VOD Search</title>
+    <link rel="stylesheet" href="./static/awesomplete.css">
+    <link rel="stylesheet" href="./static/main.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
+    <script src="./static/awesomplete.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="http://pagination.js.org/dist/2.1.2/pagination.min.js"></script>
+</head>
+<body>
+<header>
+    <div class="searchbar">
+        <span class="fas fa-search"></span>
+        <input id="gamesList">
+    </div>
+<div id="resultsNav"></div>
+</header>
+<main>
+    <div id="content">
+        <div id="results"></div>
+        <!--
+        <article class="alt">
+            <div class="info">
+                <span>Getting Over It: </span><span>Tue Dec 26 2017 16:21:01 GMT-0600 (CST)</span>
+            </div>
+        </article>
+        -->
+    </div>
+</main>
+<nav>
+    <div>
+        <!-- Games returned by search go here -->
+    </div>
+</nav>
+<footer>
+    <div>
+        <p>Channel-based VOD search: Punch in a game into the top search bar and find all relevant VODs!</p>
+        <p>9 results per page. The forward/backward buttons are real small. Front-end is not my strong suit.</p>
+    </div>
+</footer>
+
+<script src="./static/search.js"></script>
+</body>
+</html>
