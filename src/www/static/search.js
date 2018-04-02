@@ -13,6 +13,8 @@ function populateSearch() {
     $("#gamesList").on("awesomplete-close", function(e){
         if (e.originalEvent.reason == 'select') {
             searchVODs();
+        } else if (e.originalEvent.reason == 'nomatches' || e.originalEvent.reason == 'esc') {
+            clearHash();
         }
     });
 }
@@ -21,8 +23,25 @@ function hookKeypress() {
     $('#gamesList').keypress(function (e) {
         if (e.which == 13) { // Enter key
             searchVODs();
+            $('.awesomplete ul').attr('hidden','hidden');
         }
     });
+    $('#gamesList').on('input', function (e) {
+        if ($('#gamesList').val().length == 0) {
+            clearHash();
+        }
+    });
+}
+
+function initHash() {
+    if (window.location.hash.length > 0) {
+        $('#gamesList').val(unescape($.trim(window.location.hash.slice(1))));
+        searchVODs();
+    }
+}
+
+function clearHash() {
+    window.location.hash = '';
 }
 
 function searchVODs() {
@@ -32,6 +51,7 @@ function searchVODs() {
         }).done(function(data) {
             //console.log(data['vods']);
             parseResults(data);
+            window.location.hash = searchQuery;
         }).fail(function() {
             console.log('Could not search.');
         });
@@ -94,4 +114,5 @@ function parseResults(data) {
 $(function() {
     populateSearch();
     hookKeypress();
+    initHash();
 });
