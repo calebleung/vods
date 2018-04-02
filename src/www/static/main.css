@@ -111,6 +111,16 @@ footer {
     padding-left: 2%;
 }
 
+#resultsNav {
+    width: 30%;
+    display: inline-block;
+}
+
+.paginationjs {
+    line-height:1.6;
+    font-size:21px;
+}
+
 .paginationjs ul {
     list-style: none;
 }
@@ -127,5 +137,6 @@ footer {
 }
 
 .paginationjs-nav {
-    padding-left: 15%;
+    float: left;
+    padding-left: 5%;
 }

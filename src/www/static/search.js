@@ -95,20 +95,9 @@ function parseResults(data) {
                 });
 
                 $('#results').append(articleEl)
-
-                //console.log( articleEl );
             });
         }
     });
-    /*
-    var gamesData = data['games'];
-    var vodsData = data['vods'];
-    */
-
-    /*
-    var event = new Date("2016-12-28T22:46:26Z");
-    console.log(event.toString());
-    */
 }
 
 $(function() {
