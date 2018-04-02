@@ -20,15 +20,28 @@ function populateSearch() {
 }
 
 function hookKeypress() {
-    $('#gamesList').keypress(function (e) {
+    $('#gamesList').keydown(function (e) {
         if (e.which == 13) { // Enter key
             searchVODs();
             $('.awesomplete ul').attr('hidden','hidden');
+        } else if (e.which == 27) { // Esc key
+            $('#gamesList').val('');
+            clearHash();
         }
     });
     $('#gamesList').on('input', function (e) {
         if ($('#gamesList').val().length == 0) {
             clearHash();
+        }
+    });
+
+    $(document).keydown(function (e) {
+        if (!$('#gamesList').is(':focus')) {
+            if (e.which == 37) { // Left arrow key
+                $('#resultsNav').pagination('previous');
+            } else if (e.which == 39) { // Right arrow key
+                $('#resultsNav').pagination('next');
+            }
         }
     });
 }
@@ -58,6 +71,18 @@ function searchVODs() {
     }
 }
 
+function addBoxart(game) {
+    var imgEl = $(document.createElement('img'));
+    imgEl.attr('src', 'https://static-cdn.jtvnw.net/ttv-boxart/' + game + '-140x185.jpg');
+    imgEl.attr('title', decodeURI(game));
+    imgEl.click(function() {
+        $('#gamesList').val(decodeURI(game));
+        searchVODs();
+    });
+
+    $('#boxart').append(imgEl);
+}
+
 function parseResults(data) {
     /*
         game_index, date, vod_id, start_at
@@ -69,7 +94,9 @@ function parseResults(data) {
         showPageNumbers: false,
         showNavigator: true,
         callback: function(paginatedData, pagination) {
+            var gamesListed = {};
             $('#results').html(' ');
+            $('#boxart').html(' ');
             $.each(paginatedData, function(i, vod) {
                 var articleEl = $(document.createElement('article'));
                 var divEl = $(document.createElement('div'));
@@ -94,7 +121,12 @@ function parseResults(data) {
                     window.open('https://www.twitch.tv/videos/' + vod['vod_id'] + '?t=' + vod['start_at'] + 's', '_blank');
                 });
 
-                $('#results').append(articleEl)
+                $('#results').append(articleEl);
+
+                if (!(vod['game_index'] in gamesListed)) {
+                    gamesListed[vod['game_index']] = true;
+                    addBoxart(encodeURI(gameName));
+                }
             });
         }
     });
