@@ -63,7 +63,12 @@ def main():
     totalVODs = 0
     jsonLimit = 100
     allVODData = getVODsJSON(jsonLimit, offset)
-    vodsInDB = getNumVODsInDB()
+
+    try:
+        vodsInDB = getNumVODsInDB()
+    except sqlite3.OperationalError:
+        print('Could not retrieve total_vods from DB. Does the database exist? Have you run db.py?')
+        return
 
     totalVODs = allVODData['_total'] - vodsInDB
     videos = allVODData['videos']
