@@ -13,9 +13,9 @@ def main():
     c.execute('''CREATE TABLE games
              (name text, redirect int)''')
     c.execute('''CREATE TABLE vods
-             (vod_id text, title text, desc text, created_at text, animated_preview_url text)''')
+             (vod_id int, title text, desc text, created_at text, animated_preview_url text)''')
     c.execute('''CREATE TABLE played
-             (vod_id text, start_at text, game_id text, modified int)''')
+             (vod_id int, start_at text, game_id text, modified int)''')
     c.execute('INSERT INTO sys DEFAULT VALUES')
 
     conn.commit()
