@@ -9,7 +9,7 @@ def main():
     c = conn.cursor()
 
     c.execute('''CREATE TABLE sys
-             (total_vods int default 0, newest_created_at text)''')
+             (total_vods int default 0, newest_created_at text, channel_id text default ''' + config['Twitch']['channel_id'] + ')')
     c.execute('''CREATE TABLE games
              (name text, redirect int)''')
     c.execute('''CREATE TABLE vods

@@ -38,9 +38,17 @@ function hookKeypress() {
     $(document).keydown(function (e) {
         if (!$('#gamesList').is(':focus')) {
             if (e.which == 37) { // Left arrow key
-                $('#resultsNav').pagination('previous');
+                if ($('#resultsNav').pagination('getSelectedPageNum') == 1) {
+                    $('#resultsNav').pagination('go', $('#resultsNav').pagination('getTotalPage'));
+                } else {
+                    $('#resultsNav').pagination('previous');
+                }
             } else if (e.which == 39) { // Right arrow key
-                $('#resultsNav').pagination('next');
+                if ($('#resultsNav').pagination('getSelectedPageNum') == $('#resultsNav').pagination('getTotalPage')) {
+                    $('#resultsNav').pagination('go', 1);
+                } else {
+                    $('#resultsNav').pagination('next');
+                }
             }
         }
     });
