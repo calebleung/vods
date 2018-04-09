@@ -55,7 +55,7 @@ function hookKeypress() {
 
     $(document).keyup(function (e) {
         if (!$('#gamesList').is(':focus')) {
-            if (e.which == 9 || e.which == 191) {  // Tab, / keys respectively
+            if (e.which == 191) {  // / keys respectively
                 $('#gamesList').select();
             }
         }

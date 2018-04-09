@@ -40,7 +40,7 @@ def insertVOD(data):
         c.execute('INSERT INTO vods VALUES (?,?,?,?,?)', data)
         conn.commit()
     else:
-        print('{} was found in the db.'.format(data[0]))
+        print('{} already in database.'.format(data[0]))
 
 def insertPlayed(data):
     c.execute('SELECT EXISTS(SELECT 1 FROM played WHERE vod_id=:vodID and start_at=:startAt LIMIT 1)', {'vodID': data[0], 'startAt': data[1]})
@@ -50,7 +50,7 @@ def insertPlayed(data):
         c.execute('INSERT INTO played VALUES (?,?,?,NULL)', data)
         conn.commit()
     else:
-        print('{} @ {} was found in the db.'.format(data[0], data[1]))
+        print('{} @ {}s already in database.'.format(data[0], data[1]))
 
 def getNumVODsInDB():
     c.execute('SELECT total_vods FROM sys')
