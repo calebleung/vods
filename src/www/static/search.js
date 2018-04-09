@@ -52,6 +52,15 @@ function hookKeypress() {
             }
         }
     });
+
+    $(document).keyup(function (e) {
+        if (!$('#gamesList').is(':focus')) {
+            if (e.which == 9 || e.which == 191) {  // Tab, / keys respectively
+                $('#gamesList').select();
+            }
+        }
+    });
+
 }
 
 function initHash() {
@@ -75,6 +84,7 @@ function searchVODs() {
             window.location.hash = searchQuery;
         }).fail(function() {
             console.log('Could not search.');
+            $('#gamesList').val('There was an error. :(');
         });
     }
 }
@@ -103,6 +113,9 @@ function parseResults(data) {
         showNavigator: true,
         callback: function(paginatedData, pagination) {
             var gamesListed = {};
+            if (pagination.totalNumber > pagination.pageSize) {
+                $('#gamesList').blur();
+            }
             $('#results').html(' ');
             $('#boxart').html(' ');
             $.each(paginatedData, function(i, vod) {

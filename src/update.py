@@ -1,7 +1,13 @@
+import argparse
 import configparser
 import json
 import requests
 import sqlite3
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--force", type=int, nargs='?', const=-1, default=0, help="Force check all (or the last #[FORCE]) VODs/markers.")
+
+args = parser.parse_args()
 
 config = configparser.ConfigParser()
 config.read('config')
@@ -70,7 +76,13 @@ def main():
         print('Could not retrieve total_vods from DB. Does the database exist? Have you run db.py?')
         return
 
-    totalVODs = allVODData['_total'] - vodsInDB
+    if args.force == 0:     # Default, just add new VODs
+        totalVODs = allVODData['_total'] - vodsInDB
+    elif args.force > 0:    # Check the last `args.force` number of VODs. Useful if you're missing a marker from a recent broadcast
+        totalVODs = args.force
+    elif args.force == -1:  # Check _all_ the VODs
+        totalVODs = allVODData['_total']
+
     videos = allVODData['videos']
 
     if totalVODs < 100:
@@ -109,6 +121,8 @@ def main():
     updateVODsJSON(vodsInDB, totalVODs)
 
     conn.close()
+
+    print('Database updated!')
 
 if __name__ == '__main__':
     main()
