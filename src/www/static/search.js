@@ -1,4 +1,4 @@
-gamesList = []
+var gamesList = []
 
 function initConfig() {
     if (typeof(channelName) == 'undefined') {
