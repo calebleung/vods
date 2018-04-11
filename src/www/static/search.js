@@ -1,5 +1,13 @@
 gamesList = []
 
+function initConfig() {
+    if (typeof(channelName) == 'undefined') {
+        return;
+    }
+
+    document.title = channelName + ' ' + document.title;
+}
+
 function showDefault() {
     //
     $('#results').html(' ');
@@ -170,6 +178,7 @@ function parseResults(data) {
 }
 
 $(function() {
+    initConfig();
     populateSearch();
     hookKeypress();
     initHash();
