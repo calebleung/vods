@@ -1,10 +1,19 @@
+gamesList = []
+
+function showDefault() {
+    //
+    $('#results').html(' ');
+    $('#boxart').html(' ');
+}
+
 function populateSearch() {
     var gamesInput = document.getElementById('gamesList');
 
     var gamesXHR = $.get( '/games', function() {
     }).done(function(data) {
+        gamesList = data['games'];
         new Awesomplete(gamesInput, {
-            list: data['games']
+            list: gamesList
         });
         gamesInput.focus();
     }).fail(function() {
@@ -77,6 +86,8 @@ function clearHash() {
 function searchVODs() {
     var searchQuery = $.trim($('#gamesList').val());
     if (searchQuery != '') {
+        $('#results').html('Searching...');
+
         var searchXHR = $.post( '/search', {'data': searchQuery}, function() {
         }).done(function(data) {
             //console.log(data['vods']);
@@ -84,8 +95,10 @@ function searchVODs() {
             window.location.hash = searchQuery;
         }).fail(function() {
             console.log('Could not search.');
-            $('#gamesList').val('There was an error. :(');
+            $('#results').val('There was an error. :(');
         });
+    } else {
+        showDefault();
     }
 }
 
@@ -106,7 +119,7 @@ function parseResults(data) {
         game_index, date, vod_id, start_at
     */
 
-    $('#resultsNav').pagination({
+    $('.resultsNav').pagination({
         dataSource: data['vods'],
         pageSize: 9,
         showPageNumbers: false,
@@ -149,6 +162,9 @@ function parseResults(data) {
                     addBoxart(encodeURI(gameName));
                 }
             });
+            if (pagination.totalNumber == 0) {
+                $('#results').html('No VODs found!');
+            }
         }
     });
 }
@@ -157,4 +173,5 @@ $(function() {
     populateSearch();
     hookKeypress();
     initHash();
+    showDefault();
 });

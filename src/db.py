@@ -4,7 +4,12 @@ import sqlite3
 config = configparser.ConfigParser()
 config.read('config')
 
-def main():
+headers = {
+    'Accept': 'application/vnd.twitchtv.v5+json',
+    'Client-ID': config['Twitch']['client_id']
+}
+
+def initDB():
     conn = sqlite3.connect(config['DB']['name'])
     c = conn.cursor()
 
@@ -22,6 +27,9 @@ def main():
     conn.close()
 
     print('Tables created!')
+
+def main():
+    initDB()
 
 if __name__ == '__main__':
     main()
