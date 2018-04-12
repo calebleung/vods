@@ -1,8 +1,8 @@
-/*
- 002a65
- 003078
- 003e80
-*/
+:root {
+    --dark-bg: #002a65;
+    --mid-bg: #003078;
+    --light-bg: #003e80;
+}
 
 @media (max-width: 1250px) {
     nav {
@@ -38,7 +38,7 @@ body {
     grid-template-rows: 75px auto 100px;
     grid-template-columns: minmax(200px, 3fr) 9fr;
 
-    background-color: #002a65;
+    background-color: var(--dark-bg);
 }
 
 header {
@@ -47,7 +47,7 @@ header {
     top: 0;
     padding-top: 10px;
     padding-left: 2%;
-    background-color: #002a65;
+    background-color: var(--dark-bg);
 }
 
 header input {
@@ -56,7 +56,7 @@ header input {
     font-size: 45px;
     height: 50px;
     color: #fff;
-    background: #003078;
+    background: var(--mid-bg);
     outline: none;
     padding: 5px;
     box-shadow: 0 2px 6px 0 rgba(0,0,0,0.20);
@@ -109,14 +109,14 @@ main {
     margin: 10px;
     overflow: hidden;
 
-    background-color: #003e80;
+    background-color: var(--light-bg);
     box-shadow: 0 2px 6px 0 rgba(0,0,0,0.2);
     border-radius: 8px;
     padding: 10px 20px 20px 20px;
 }
 
 #results article:hover {
-    background-color: #002a65 !important;
+    background-color: var(--dark-bg) !important;
 }
 
 #results article p {
@@ -124,7 +124,7 @@ main {
 }
 
 #results article.alt {
-    background-color: #003078;
+    background-color: var(--mid-bg);
 }
 
 footer {
