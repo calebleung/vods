@@ -6,12 +6,39 @@ function initConfig() {
     }
 
     document.title = channelName + ' ' + document.title;
+
+    var imgEl = document.createElement('img');
+    imgEl.style.width = '50%';
+    imgEl.style.height = '50%';
+    imgEl.src = channelLogo;
+
+    $('#channelLogo').append(imgEl);
+
+    if (window.location.hash.length == 0) {
+        showInfo();
+    }
+    populateDropdown();
 }
 
-function showDefault() {
-    //
+function populateDropdown() {
+    $.each(gamesList, function(i, game) {
+        var optionEl = document.createElement('option');
+        if (game != '') {
+            optionEl.value = game;
+            optionEl.text = game;
+            $('#gamesDropdown').append(optionEl);
+        }
+    });
+    $('#gamesDropdown').change(function() {
+        $('#gamesList').val($('#gamesDropdown option:selected').val());
+        searchVODs();
+    });
+}
+
+function showInfo() {
     $('#results').html(' ');
     $('#boxart').html(' ');
+    $('#channelInfo').show();
 }
 
 function populateSearch() {
@@ -24,8 +51,9 @@ function populateSearch() {
             list: gamesList
         });
         gamesInput.focus();
+        initConfig();
     }).fail(function() {
-        console.log('Could not load /games list.');
+        $('#results').html('Could not load /games list.');
     });
     $("#gamesList").on("awesomplete-close", function(e){
         if (e.originalEvent.reason == 'select') {
@@ -83,6 +111,7 @@ function hookKeypress() {
 function initHash() {
     if (window.location.hash.length > 0) {
         $('#gamesList').val(unescape($.trim(window.location.hash.slice(1))));
+        $('#channelInfo').hide();
         searchVODs();
     }
 }
@@ -95,6 +124,7 @@ function searchVODs() {
     var searchQuery = $.trim($('#gamesList').val());
     if (searchQuery != '') {
         $('#results').html('Searching...');
+        $('#channelInfo').hide();
 
         var searchXHR = $.post( '/search', {'data': searchQuery}, function() {
         }).done(function(data) {
@@ -106,7 +136,7 @@ function searchVODs() {
             $('#results').val('There was an error. :(');
         });
     } else {
-        showDefault();
+        showInfo();
     }
 }
 
@@ -127,7 +157,7 @@ function parseResults(data) {
         game_index, date, vod_id, start_at
     */
 
-    $('.resultsNav').pagination({
+    $('#resultsNav').pagination({
         dataSource: data['vods'],
         pageSize: 9,
         showPageNumbers: false,
@@ -178,9 +208,7 @@ function parseResults(data) {
 }
 
 $(function() {
-    initConfig();
     populateSearch();
     hookKeypress();
     initHash();
-    showDefault();
 });

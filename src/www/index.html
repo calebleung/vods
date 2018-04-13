@@ -16,7 +16,7 @@
     <div class="searchbar">
         <span class="fas fa-search"></span>
         <input id="gamesList" tabindex="1">
-        <div class="resultsNav"></div>
+        <div id="resultsNav"></div>
     </div>
 </header>
 <main>
@@ -35,15 +35,23 @@
     <div id="boxart">
         <!-- Games returned by search go here -->
     </div>
+    <div id="channelInfo">
+        <div id="channelLogo"></div>
+        <div class="dropdown">
+            <select id="gamesDropdown" name="gamesDropdown"> <!--Supplement an id here instead of using 'text'-->
+                <option value="" selected>All Games</option> 
+            </select>
+        </div>
+    </div>
 </nav>
 <footer>
-    <div>
+    <div id="footer">
         <p>Channel-based VOD search: Punch in a game into the top search bar and find all relevant VODs!</p>
         <p>9 results per page.</p>
-        <div class="resultsNav"></div>
     </div>
 </footer>
 <script src="./static/config.js"></script>
 <script src="./static/search.js"></script>
+<script src="./static/mobile.js"></script>
 </body>
 </html>

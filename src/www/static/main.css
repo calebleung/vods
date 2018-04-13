@@ -14,12 +14,8 @@
     #results {
         grid-template-columns: 300px 300px !important;
     }
-    .searchbar .resultsNav {
-        display: none !important;
-    }
-    footer .resultsNav {
-        display: block !important;
-        width: 100%;
+    .searchbar #resultsNav {
+        position: fixed;
     }
     .awesomplete {
         width: 80% !important;
@@ -86,6 +82,11 @@ nav {
     overflow: auto;
 }
 
+#channelInfo {
+    display: none;
+    text-align: center;
+}
+
 #boxart img {
     cursor: pointer;
     padding: 5px;
@@ -132,11 +133,11 @@ footer {
     padding-left: 2%;
 }
 
-footer .resultsNav {
-    display: hide;
+footer #resultsNav {
+    display: none;
 }
 
-.searchbar .resultsNav {
+.searchbar #resultsNav {
     width: 30%;
     display: inline-block;
 }
