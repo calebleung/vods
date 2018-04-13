@@ -7,12 +7,18 @@ function initConfig() {
 
     document.title = channelName + ' ' + document.title;
 
+    var aEl = document.createElement('a');
+    aEl.href = channelURL;
+    aEl.target = '_blank';
+
     var imgEl = document.createElement('img');
     imgEl.style.width = '50%';
     imgEl.style.height = '50%';
     imgEl.src = channelLogo;
 
-    $('#channelLogo').append(imgEl);
+    aEl.append(imgEl);
+
+    $('#channelLogo').append(aEl);
 
     if (window.location.hash.length == 0) {
         showInfo();
@@ -94,14 +100,13 @@ function hookKeypress() {
                 } else {
                     $('#resultsNav').pagination('next');
                 }
-            }
-        }
-    });
-
-    $(document).keyup(function (e) {
-        if (!$('#gamesList').is(':focus')) {
-            if (e.which == 191) {  // / keys respectively
+            } else if (e.which == 191) {  // / key
+                e.preventDefault();       // Prevents a '/' in input and Quick Search in Firefox
                 $('#gamesList').select();
+            } else if (e.which == 27) { // Esc key
+                $('#gamesList').val('');
+                $('#gamesList').select();
+                clearHash();
             }
         }
     });
@@ -136,6 +141,8 @@ function searchVODs() {
             $('#results').val('There was an error. :(');
         });
     } else {
+        $('#resultsNav').pagination('disable');
+        $('#resultsNav').pagination('hide');
         showInfo();
     }
 }

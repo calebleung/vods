@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./static/awesomplete.css">
     <link rel="stylesheet" href="./static/main.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
+    <link rel="stylesheet" href="./static/keys.css">
     <script src="./static/awesomplete.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="http://pagination.js.org/dist/2.1.2/pagination.min.js"></script>
@@ -32,9 +33,6 @@
     </div>
 </main>
 <nav>
-    <div id="boxart">
-        <!-- Games returned by search go here -->
-    </div>
     <div id="channelInfo">
         <div id="channelLogo"></div>
         <div class="dropdown">
@@ -43,11 +41,15 @@
             </select>
         </div>
     </div>
+    <div id="boxart">
+        <!-- Games returned by search go here -->
+    </div>
 </nav>
 <footer>
     <div id="footer">
         <p>Channel-based VOD search: Punch in a game into the top search bar and find all relevant VODs!</p>
         <p>9 results per page.</p>
+        <p><span class="light-keys shortcuts"><kbd>&larr;</kbd> <kbd>&rarr;</kbd> : Page navigation <kbd>/</kbd> : Jump to search <kbd>ESC</kbd> : Clear search</span></p>
     </div>
 </footer>
 <script src="./static/config.js"></script>

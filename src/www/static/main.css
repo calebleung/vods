@@ -31,10 +31,11 @@ html, body {
 }
 body {
     display: grid;
-    grid-template-rows: 75px auto 100px;
+    grid-template-rows: 75px auto 110px;
     grid-template-columns: minmax(200px, 3fr) 9fr;
 
     background-color: var(--dark-bg);
+    overflow: hidden;
 }
 
 header {
@@ -85,6 +86,11 @@ nav {
 #channelInfo {
     display: none;
     text-align: center;
+}
+
+.shortcuts {
+    text-align: left;
+    font-size: 80%;
 }
 
 #boxart img {
