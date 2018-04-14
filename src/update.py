@@ -108,12 +108,16 @@ def main():
 
             #print('Title: {} \nGame: {} ID: {} Created: {}'.format(video['title'], video['game'], video['_id'][1:], video['created_at']))
 
-            if markerData['markers']['game_changes'] is not None:
-                for marker in markerData['markers']['game_changes']:
-                    gameID = getGame((marker['label'],))
-                    playedData = (vodID, marker['time'], gameID,)
-                    insertPlayed(playedData)
-                    #print('Game: {} After: {}s {}'.format(marker['label'], marker['time'], vodID))
+            try:
+                if markerData['markers']['game_changes'] is not None:
+                    for marker in markerData['markers']['game_changes']:
+                        gameID = getGame((marker['label'],))
+                        playedData = (vodID, marker['time'], gameID,)
+                        insertPlayed(playedData)
+                        #print('Game: {} After: {}s {}'.format(marker['label'], marker['time'], vodID))
+            except KeyError:
+                print('No additional games found for {}'.format(vodID))
+                pass
 
         offset += len(allVODData['videos'])
         allVODData = getVODsJSON(jsonLimit, offset)

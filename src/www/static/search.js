@@ -11,6 +11,12 @@ function initConfig() {
     aEl.href = channelURL;
     aEl.target = '_blank';
 
+    var channelAnchorEl = document.createElement('a');
+    channelAnchorEl.href = channelURL;
+    channelAnchorEl.target = '_blank';
+
+    $(channelAnchorEl).text(channelName);
+
     var imgEl = document.createElement('img');
     imgEl.style.width = '50%';
     imgEl.style.height = '50%';
@@ -19,6 +25,7 @@ function initConfig() {
     aEl.append(imgEl);
 
     $('#channelLogo').append(aEl);
+    $('#channelName').html(channelAnchorEl);
 
     if (window.location.hash.length == 0) {
         showInfo();
