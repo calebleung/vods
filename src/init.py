@@ -1,15 +1,8 @@
 import configparser
-import json
-import requests
 import sqlite3
 
 config = configparser.ConfigParser()
 config.read('config')
-
-headers = {
-    'Accept': 'application/vnd.twitchtv.v5+json',
-    'Client-ID': config['Twitch']['client_id']
-}
 
 def initDB():
     conn = sqlite3.connect(config['DB']['name'])
@@ -30,17 +23,8 @@ def initDB():
 
     print('Tables created!')
 
-def initJS():
-    data = json.loads(requests.get('https://api.twitch.tv/kraken/channels/{}'.format(config['Twitch']['channel_id']), headers=headers).text)
-
-    with open('./www/static/config.js', 'w') as f:
-        f.write('var channelURL = \'{}\';\n'.format(data['url']))
-        f.write('var channelName = \'{}\';\n'.format(data['display_name']))
-        f.write('var channelLogo = \'{}\';\n'.format(data['logo']))
-
 def main():
     initDB()
-    initJS()
 
 if __name__ == '__main__':
     main()

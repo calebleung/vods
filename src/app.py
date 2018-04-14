@@ -5,6 +5,8 @@ from flask_caching import Cache
 from flask_restful import Resource, Api
 
 import configparser
+import json
+import requests
 import sqlite3
 
 app = Flask(__name__,
@@ -15,6 +17,18 @@ cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
 config = configparser.ConfigParser()
 config.read('config')
+
+headers = {
+    'Accept': 'application/vnd.twitchtv.v5+json',
+    'Client-ID': config['Twitch']['client_id']
+}
+
+channelData = json.loads(requests.get('https://api.twitch.tv/kraken/channels/{}'.format(config['Twitch']['channel_id']), headers=headers).text)
+
+channel = {}
+channel['url'] = channelData['url']
+channel['name'] = channelData['display_name']
+channel['logo'] = channelData['logo']
 
 class GamesList(Resource):
     @cache.memoize(50)
@@ -47,7 +61,7 @@ api.add_resource(Search, '/search')
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template('index.html', channel=channel)
 
 if __name__ == '__main__':
     app.run()

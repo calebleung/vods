@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
-    <title>VOD Search</title>
+    <title>{{ channel.name }} VOD Search</title>
     <link rel="stylesheet" href="./static/awesomplete.css">
     <link rel="stylesheet" href="./static/main.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
@@ -34,7 +34,7 @@
 </main>
 <nav>
     <div id="channelInfo">
-        <div id="channelLogo"></div>
+        <div id="channelLogo"><a href="{{ channel.url }}" target="_new"><img src="{{ channel.logo }}" width="50%" height="50%"></a></div>
         <div class="dropdown">
             <select id="gamesDropdown" name="gamesDropdown"> <!--Supplement an id here instead of using 'text'-->
                 <option value="" selected>All Games</option> 
@@ -47,7 +47,7 @@
 </nav>
 <footer>
     <div id="footer">
-        <p><span id="channelName">Channel-based</span> VOD search: Punch in a game into the top search bar and find all relevant VODs!</p>
+        <p><a href="{{ channel.url }}" target="_new">{{ channel.name }}</a> VOD search: Punch in a game into the top search bar and find all relevant VODs!</p>
         <p>9 results per page. <a href="https://github.com/calebleung/vods" target="_new">GitHub</a>. <span class="light-keys shortcuts"><kbd>&larr;</kbd> <kbd>&rarr;</kbd> : Previous/Next page <kbd>/</kbd> : Jump to search <kbd>ESC</kbd> : Clear search</span></p>
 
     </div>

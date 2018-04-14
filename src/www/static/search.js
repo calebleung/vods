@@ -1,38 +1,5 @@
 var gamesList = []
 
-function initConfig() {
-    if (typeof(channelName) == 'undefined') {
-        return;
-    }
-
-    document.title = channelName + ' ' + document.title;
-
-    var aEl = document.createElement('a');
-    aEl.href = channelURL;
-    aEl.target = '_blank';
-
-    var channelAnchorEl = document.createElement('a');
-    channelAnchorEl.href = channelURL;
-    channelAnchorEl.target = '_blank';
-
-    $(channelAnchorEl).text(channelName);
-
-    var imgEl = document.createElement('img');
-    imgEl.style.width = '50%';
-    imgEl.style.height = '50%';
-    imgEl.src = channelLogo;
-
-    aEl.append(imgEl);
-
-    $('#channelLogo').append(aEl);
-    $('#channelName').html(channelAnchorEl);
-
-    if (window.location.hash.length == 0) {
-        showInfo();
-    }
-    populateDropdown();
-}
-
 function populateDropdown() {
     $.each(gamesList, function(i, game) {
         var optionEl = document.createElement('option');
@@ -64,7 +31,7 @@ function populateSearch() {
             list: gamesList
         });
         gamesInput.focus();
-        initConfig();
+        populateDropdown();
     }).fail(function() {
         $('#results').html('Could not load /games list.');
     });
