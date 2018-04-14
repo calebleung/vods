@@ -113,6 +113,7 @@ function hookKeypress() {
             } else if (e.which == 27) { // Esc key
                 $('#gamesList').val('');
                 $('#gamesList').select();
+                searchVODs();
                 clearHash();
             }
         }
