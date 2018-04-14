@@ -45,9 +45,8 @@ class Search(Resource):
 api.add_resource(GamesList, '/games')
 api.add_resource(Search, '/search')
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
+@app.route('/')
+def index():
     return render_template("index.html")
 
 if __name__ == '__main__':
