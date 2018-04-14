@@ -73,7 +73,7 @@ def main():
     try:
         vodsInDB = getNumVODsInDB()
     except sqlite3.OperationalError:
-        print('Could not retrieve total_vods from DB. Does the database exist? Have you run db.py?')
+        print('Could not retrieve total_vods from DB. Does the database exist? Have you run init.py?')
         return
 
     if args.force == 0:     # Default, just add new VODs
