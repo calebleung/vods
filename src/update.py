@@ -86,7 +86,7 @@ def main():
     videos = allVODData['videos']
 
     if totalVODs < 100:
-        if totalVODs == 0:
+        if totalVODs <= 0:
             print('No new VODs to add.')
             return
         allVODData = getVODsJSON(totalVODs, offset)
