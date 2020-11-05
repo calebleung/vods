@@ -24,7 +24,7 @@ function showInfo() {
 function populateSearch() {
     var gamesInput = document.getElementById('gamesList');
 
-    var gamesXHR = $.get( '/games', function() {
+    var gamesXHR = $.get( './games', function() {
     }).done(function(data) {
         gamesList = data['games'];
         new Awesomplete(gamesInput, {
@@ -106,7 +106,7 @@ function searchVODs() {
         $('#results').html('Searching...');
         $('#channelInfo').hide();
 
-        var searchXHR = $.post( '/search', {'data': searchQuery}, function() {
+        var searchXHR = $.post( './search', {'data': searchQuery}, function() {
         }).done(function(data) {
             //console.log(data['vods']);
             parseResults(data);
