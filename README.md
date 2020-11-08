@@ -33,4 +33,4 @@ Twitch provides an API endpoint which lists when a game is switched to and what 
 
 ![Demo Animation](https://thumbs.gfycat.com/GlumElatedDevilfish-size_restricted.gif)
 
-[Demo](https://vods.zx3.org/)
+[Demo](https://apps.zettiverse.com/pavods/)
